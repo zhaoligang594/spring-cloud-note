@@ -11,6 +11,7 @@
 <body>
   <div id="app">加载中！！！</div>
   <script>
+    var colors=["#3F51B5","#C71585","#800080","#6A5ACD","#008080","#A52A2A"];
     window.$docsify = {
       name: 'Notes',
       repo: '' ,
@@ -20,12 +21,13 @@
       //loadNavbar: true,
       repo: 'https://github.com/zhaoligang594/', // 配置git地址
       //logo: 'https://github.com/account',
-      themeColor: '#3F51B5', // 配置颜色主题
+      themeColor: colors[Math.floor((Math.random()*colors.length))],//'#3F51B5', // 配置颜色主题
       mergeNavbar: true, //小屏设备下合并导航栏到侧边栏。
       //disqus: 'shortname', //Disqus评论系统支持
       coverpage: true, //封面的生成同样是从 markdown 文件渲染来的。开启渲染封面功能后在文档根目录创建
       //relativePath: true,// 如果 启用 了相对路径
       //routerMode: 'history', // default: 'hash'
+      formatUpdated: '{YYYY}年{MM}月{DD}日 {HH}:{mm}',
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>

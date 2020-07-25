@@ -104,92 +104,129 @@ SpringCloud Stream 消息驱动
 
 > 我们采用父子项目的方式进行学习。
 
-**相关依赖的版本号：**
+#### 3.1 运行环境介绍
+
+1. JDK 1.8
+2. Spring-cloud:**Hoxton.SR1**
+3. Spring-boot:**2.2.2.RELEASE**
+4. Spring-Cloud-alibaba: **2.1.0.RELEASE**
+
+#### 3.2 整体父项目环境
+
+1. 创建一个简单的maven的项目，命名为：spring-cloud-learn，之后修改pom.xml
+
+**pom.xml**
 
 ```xml
-	<properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.version>4.12</junit.version>
-        <log4j.version>1.2.17</log4j.version>
-        <mysql.version>8.0.19</mysql.version>
-        <druid.version>1.1.16</druid.version>
-        <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
-        <spring.cloud.alibaba.version>2.1.0.RELEASE</spring.cloud.alibaba.version>
-        <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
-        <lombok.version>1.18.8</lombok.version>
-    </properties>
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring.cloud.alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.8</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>1.3.0</version>
-            </dependency>
-            <!--
-                SR5会有下面的问题
-               Correct the classpath of your application so that it contains a single, compatible version of reactor.netty.resources.ConnectionProvider
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-               https://www.yht7.com/news/18312
-               -->
-            <!--<dependency>-->
-            <!--<groupId>io.projectreactor.netty</groupId>-->
-            <!--<artifactId>reactor-netty</artifactId>-->
-            <!--<version>0.9.2.RELEASE</version>-->
-            <!--</dependency>-->
-        </dependencies>
-    </dependencyManagement>
+  <groupId>com.breakpoint</groupId>
+  <artifactId>spring-cloud-learn</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <name>spring-cloud-learn</name>
+
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <junit.version>4.12</junit.version>
+    <log4j.version>1.2.17</log4j.version>
+    <mysql.version>8.0.19</mysql.version>
+    <druid.version>1.1.16</druid.version>
+    <spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+    <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
+    <spring.cloud.alibaba.version>2.1.0.RELEASE</spring.cloud.alibaba.version>
+    <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
+    <lombok.version>1.18.8</lombok.version>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring.cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${spring.cloud.alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.8</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>1.3.0</version>
+      </dependency>
+      <!--
+          SR5会有下面的问题
+         Correct the classpath of your application so that it contains a single, compatible version of reactor.netty.resources.ConnectionProvider
+
+         https://www.yht7.com/news/18312
+         -->
+      <!--<dependency>-->
+      <!--<groupId>io.projectreactor.netty</groupId>-->
+      <!--<artifactId>reactor-netty</artifactId>-->
+      <!--<version>0.9.2.RELEASE</version>-->
+      <!--</dependency>-->
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <fork>true</fork>
+          <addResources>true</addResources>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
 ```
 
+#### 3.3  项目结构
+
+![image-20200725144621858](pic/image-20200725144621858.png)
+
+
+
+
+
+**{docsify-updated}** 
