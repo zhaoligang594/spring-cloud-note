@@ -2,9 +2,9 @@
 
 <img src="_media/51595588402_.pic_hd.jpg" style="height:100px;border-radius:50%">
 
-# 赵先生的私秘空间 <small>2020.07</small>
+# spring-cloud-note 学习日记 <small>2020.07</small>
 
-> 记录自己的生活，对未来充满憧憬。
+> 记录自己的学习心得。
 
 - 简单，自由
 - 不在能知，乃在能行
